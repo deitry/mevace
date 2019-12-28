@@ -1,3 +1,6 @@
 # Build
 bin/
 obj/
+
+# Dev
+.vscode/

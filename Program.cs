@@ -11,6 +11,7 @@ namespace mevace
 {
     public class Program
     {
+        // Точка входа
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

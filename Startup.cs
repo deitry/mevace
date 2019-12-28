@@ -26,11 +26,12 @@ namespace mevace
         {
             services.AddControllersWithViews();
 
-	    //services.Configure<ForwardedHeadersOptions>(options =>
+            // альтернативный вариант прописывания хидеров
+            //services.Configure<ForwardedHeadersOptions>(options =>
             //{
-	    //    options.ForwardedHeaders =
-	    //        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-	    //});
+            //    options.ForwardedHeaders =
+            //        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,27 +43,27 @@ namespace mevace
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/AppRoot/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-	    //app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
-	    app.UseForwardedHeaders(new ForwardedHeadersOptions
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
-	        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-	    });
-	    
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=AppRoot}/{action=Index}/{id?}");
             });
 
         }
