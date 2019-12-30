@@ -19,10 +19,10 @@ namespace mevace.Controllers
             // Структура запроса: обрати внимание, что id может обрабатываться специально
             // http://localhost:5000/Empire/Index/1?name=Chelovek
 
-            ViewData["Message"] = $"Hello, this is {name} President speaking";
-            ViewData["NumTimes"] = id;
+            // ViewData["Message"] = $"Hello, this is {name} President speaking";
+            // ViewData["NumTimes"] = id;
 
-            return View("Index1");
+            return View("Index1", new mevace.Models.EmpireModel(id: id, name: name));
             // return HtmlEncoder.Default.Encode($"Hello, this is {name} President speaking");
         }
 
