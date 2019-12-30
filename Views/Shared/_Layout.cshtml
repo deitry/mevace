@@ -1,9 +1,11 @@
 ﻿<!DOCTYPE html>
+@* общий шаблон для всех страниц сайта *@
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - mevace</title>
+    <title>@ViewData["Title"] - Hello, World! from mevace</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -23,6 +25,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="AppRoot" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Empire" asp-action="Index">Empire?</a>
                         </li>
                     </ul>
                 </div>
