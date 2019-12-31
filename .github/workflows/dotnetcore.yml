@@ -23,7 +23,7 @@ jobs:
         echo -n "${{ secrets.GIT_CI_SSH_PRIVATE_KEY }}"  > $HOME/.ssh/id_rsa
         chmod 600 $HOME/.ssh/id_rsa
         stat $HOME/.ssh/id_rsa
-        scp -r bin/Release/netcoreapp3.1 ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP }}:${{ secrets.TARGET_BIN_DIR }} -P ${{ secrets.REMOTE_SERVER_SSH_PORT }}
+        scp -r -P ${{ secrets.REMOTE_SERVER_SSH_PORT }} bin/Release/netcoreapp3.1 ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP }}:${{ secrets.TARGET_BIN_DIR }}
 #       if: github.ref == 'refs/heads/master'
 #       run: echo ${{ secrets.TEST_TEST }}
 #       run: scp -r bin/Release/netcoreapp3.1/* ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP }}:${{ secrets.TARGET_BIN_DIR }} -P ${{ secrets.REMOTE_SERVER_SSH_PORT }}
