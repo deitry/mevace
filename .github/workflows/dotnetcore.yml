@@ -17,7 +17,7 @@ jobs:
 #       run: dotnet build --configuration Release
     - name: Deploy to remote server
 #       if: github.ref == 'refs/heads/master'
-      run: echo ${{ secrets.TEST }}
+      run: echo ${{ secrets.TEST_TEST }}
 #       run: scp -r bin/Release/netcoreapp3.1/* ${{ secrets. }}
 #       uses: appleboy/scp-action@v0.0.1
 #       with:
