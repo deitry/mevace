@@ -9,16 +9,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-#     - name: Setup .NET Core
-#       uses: actions/setup-dotnet@v1
-#       with:
-#         dotnet-version: 3.1.100
-#     - name: Build with dotnet
-#       run: dotnet build --configuration Release
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
     - name: Deploy to remote server
 #       if: github.ref == 'refs/heads/master'
-      run: echo ${{ secrets.TEST_TEST }}
-#       run: scp -r bin/Release/netcoreapp3.1/* ${{ secrets. }}
+#       run: echo ${{ secrets.TEST_TEST }}
+      run: scp -r bin/Release/netcoreapp3.1/* ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP }}:${{ secrets.TARGET_BIN_DIR }}
 #       uses: appleboy/scp-action@v0.0.1
 #       with:
 #         host: ${{ secrets.REMOTE_SERVER_IP }}
