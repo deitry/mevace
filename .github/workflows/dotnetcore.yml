@@ -17,15 +17,14 @@ jobs:
 #       run: dotnet build --configuration Release
     - name: Deploy to remote server
       run: |
-        touch 1
         mkdir -p $HOME/.ssh/
         chmod 700 $HOME/.ssh/
         echo -n "${{ secrets.GIT_CI_SSH_PRIVATE_KEY }}"  > $HOME/.ssh/id_rsa
         chmod 600 $HOME/.ssh/id_rsa
         stat $HOME/.ssh/id_rsa
-        scp -P ${{ secrets.REMOTE_SERVER_SSH_PORT }} 1 "${{ secrets.GIT_CI_REMOTE_SERVER_USER }}"@"${{ secrets.REMOTE_SERVER_IP }}":"${{ secrets.TARGET_BIN_DIR }}"
+        ssh -o "StrictHostKeyChecking=no" -p ${{ secrets.REMOTE_SERVER_SSH_PORT}} -l ${{ secrets.GIT_CI_REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP }} -i $HOME/.ssh/id_rsa "cd ${{ secrets.TARGET_PROJECT_DIR }} && sudo git pull origin master && sudo dotnet publish --configuration Release && sudo systemctl restart ${{ secrets.REMOTE_SERVER_SERVICE_NAME }}"
 
-
+#        scp -P ${{ secrets.REMOTE_SERVER_SSH_PORT }} 1 "${{ secrets.GIT_CI_REMOTE_SERVER_USER }}"@"${{ secrets.REMOTE_SERVER_IP }}":"${{ secrets.TARGET_BIN_DIR }}"
 #       if: github.ref == 'refs/heads/master'
 #       run: echo ${{ secrets.TEST_TEST }}
 #       run: scp -r bin/Release/netcoreapp3.1/* ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP }}:${{ secrets.TARGET_BIN_DIR }} -P ${{ secrets.REMOTE_SERVER_SSH_PORT }}
