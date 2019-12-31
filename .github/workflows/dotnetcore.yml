@@ -9,21 +9,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.100
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+#     - name: Setup .NET Core
+#       uses: actions/setup-dotnet@v1
+#       with:
+#         dotnet-version: 3.1.100
+#     - name: Build with dotnet
+#       run: dotnet build --configuration Release
     - name: Deploy to remote server
       run: |
-        ls bin/Release/netcoreapp3.1
+        touch 1
         mkdir -p $HOME/.ssh/
         chmod 700 $HOME/.ssh/
         echo -n "${{ secrets.GIT_CI_SSH_PRIVATE_KEY }}"  > $HOME/.ssh/id_rsa
         chmod 600 $HOME/.ssh/id_rsa
         stat $HOME/.ssh/id_rsa
-        scp -r -P ${{ secrets.REMOTE_SERVER_SSH_PORT }} bin/Release/netcoreapp3.1 ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP }}:${{ secrets.TARGET_BIN_DIR }}
+        scp -P ${{ secrets.REMOTE_SERVER_SSH_PORT }} 1 "${{ secrets.GIT_CI_REMOTE_SERVER_USER }}"@"${{ secrets.REMOTE_SERVER_IP }}":"${{ secrets.TARGET_BIN_DIR }}"
+
+
 #       if: github.ref == 'refs/heads/master'
 #       run: echo ${{ secrets.TEST_TEST }}
 #       run: scp -r bin/Release/netcoreapp3.1/* ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP }}:${{ secrets.TARGET_BIN_DIR }} -P ${{ secrets.REMOTE_SERVER_SSH_PORT }}
