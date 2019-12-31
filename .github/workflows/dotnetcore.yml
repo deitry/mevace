@@ -1,0 +1,26 @@
+name: .NET Core
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+    - name: Deploy to remote server
+      if: github.ref == 'refs/heads/master'
+      run: |
+        mkdir -p $HOME/.ssh/
+        chmod 700 $HOME/.ssh/
+        echo -n "${{ secrets.GIT_CI_SSH_PRIVATE_KEY }}"  > $HOME/.ssh/id_rsa
+        chmod 600 $HOME/.ssh/id_rsa
+        stat $HOME/.ssh/id_rsa
+        ssh -o "StrictHostKeyChecking=no" -p ${{ secrets.REMOTE_SERVER_SSH_PORT}} -l ${{ secrets.GIT_CI_REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP }} -i $HOME/.ssh/id_rsa "cd ${{ secrets.TARGET_PROJECT_DIR }} && sudo git pull origin master && sudo dotnet publish --configuration Release && sudo systemctl restart ${{ secrets.REMOTE_SERVER_SERVICE_NAME }}"
