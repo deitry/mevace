@@ -9,28 +9,30 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.100
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+#     - name: Setup .NET Core
+#       uses: actions/setup-dotnet@v1
+#       with:
+#         dotnet-version: 3.1.100
+#     - name: Build with dotnet
+#       run: dotnet build --configuration Release
     - name: Deploy to remote server
-      if: github.ref == 'refs/heads/master'
-      uses: appleboy/scp-action@v0.0.1
-      with:
-        host: ${{ secrets.REMOTE_SERVER_IP }}
-        username: ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}
-        password: ${{ secrets.GIT_CI_REMOTE_SERVER_PASS }}
-        port: ${{ secrets.REMOTE_SERVER_SSH_PORT }}
-        source: "bin/Release/netcoreapp3.1/*"
-        target: ${{ secrets.TARGET_BIN_DIR }}
-    - name: Reload app
-      if: github.ref == 'refs/heads/master'
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.REMOTE_SERVER_IP }}
-        username: ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}
-        password: ${{ secrets.GIT_CI_REMOTE_SERVER_PASS }}
-        port: ${{ secrets.REMOTE_SERVER_SSH_PORT }}
-        script: sudo systemctl restart ${{ secrets.REMOTE_SERVER_SERVICE_NAME }}
+#       if: github.ref == 'refs/heads/master'
+      run: echo ${{ secrets.TEST }}
+#       run: scp -r bin/Release/netcoreapp3.1/* ${{ secrets. }}
+#       uses: appleboy/scp-action@v0.0.1
+#       with:
+#         host: ${{ secrets.REMOTE_SERVER_IP }}
+#         username: ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}
+#         password: ${{ secrets.GIT_CI_REMOTE_SERVER_PASS }}
+#         port: ${{ secrets.REMOTE_SERVER_SSH_PORT }}
+#         source: "bin/Release/netcoreapp3.1/*"
+#         target: ${{ secrets.TARGET_BIN_DIR }}
+#     - name: Reload app
+#       if: github.ref == 'refs/heads/master'
+#       uses: appleboy/ssh-action@master
+#       with:
+#         host: ${{ secrets.REMOTE_SERVER_IP }}
+#         username: ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}
+#         password: ${{ secrets.GIT_CI_REMOTE_SERVER_PASS }}
+#         port: ${{ secrets.REMOTE_SERVER_SSH_PORT }}
+#         script: sudo systemctl restart ${{ secrets.REMOTE_SERVER_SERVICE_NAME }}
