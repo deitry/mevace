@@ -18,7 +18,7 @@ jobs:
     - name: Deploy to remote server
 #       if: github.ref == 'refs/heads/master'
 #       run: echo ${{ secrets.TEST_TEST }}
-      run: scp -r bin/Release/netcoreapp3.1/* ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP }}:${{ secrets.TARGET_BIN_DIR }}
+      run: scp -r bin/Release/netcoreapp3.1/* ${{ secrets.GIT_CI_REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP }}:${{ secrets.TARGET_BIN_DIR }} -P ${{ secrets.REMOTE_SERVER_SSH_PORT }}
 #       uses: appleboy/scp-action@v0.0.1
 #       with:
 #         host: ${{ secrets.REMOTE_SERVER_IP }}
